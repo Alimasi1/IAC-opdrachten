@@ -1,0 +1,38 @@
+---
+- name: Install base tools on app servers
+  hosts: app
+  become: yes
+  tasks:
+    - name: Install app packages
+      ansible.builtin.package:
+        name: "{{ app_packages }}"
+        state: present
+
+- name: Install db tools on db servers
+  hosts: db
+  become: yes
+  tasks:
+    - name: Install db packages
+      ansible.builtin.package:
+        name: "{{ db_packages }}"
+        state: present
+
+- name: Manage users on all hosts
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure users are configured
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        shell: "{{ item.shell }}"
+        state: "{{ item.state }}"
+      loop: "{{ users }}"
+
+    - name: Create directories
+      ansible.builtin.file:
+        path: "/opt/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - appdata
+        - logs

@@ -1,0 +1,20 @@
+#cloud-config
+users:
+  - name: iac
+    groups: sudo
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCyOKjSMRZP/InnY8dzGDN7ANeWnXVI1ilX1v+Hz/Z+gi7GGkFYmwv8kV+jngVm4t8fsN6EN/42sw4B+ij89it6kBlIaCJJO0aXUu1NTQhtCuy3NM4OWErqZTAgsdq0cKmyADMa3rgbwDCTQj2C9vgq7FBtSewAQv4rEKkMM8Lp7YpyQS7Cgg5pCWnAGGBPqtxa0SvsjUDiWphCbhrkdFgSx2T5QR9+L6BZPW1xhEVoR5PtGbS6uzhQ2BwHHY86ipPRNoFBGGRwg9qqSLAR5mq6GMfmNx2uCf+kTiSROUUFm2qwsZWafBx/MSqnbfUL7OCcCPz3qw6GARwEzEH///1jx96TuhNvnapvBzZ8EtRSuAwLv+2JU6co47Rlet04ig9mEE24cVz8aw0NkYschCMR8mQ1hYiosdvAQ4b5VPyxsF6MuNjxUk7EmvVXOVvxpQVPj8GW0wu6p6x2j9D/At6BH1a7ls0Nsuo1RrotIESeF0lErW+l2tWys4HrPqjSgsQ8jnhscQhmN9VWa1mpoYXaeY9HQMsgU9YkdRXNBkm4UyYBdC8sUYj//gZQmEc2iHWRpnt2zdsY46xaNbxxHKUKSDLlSGWqBU6ev087w4A0Qg0QPvz3LkEZqmbCgAb6QG+G4xb4+qAKdSwWdiW1pWY2YwL8SQVnP+/h/JekIupihw== student@DESKTOP-1NUD89T
+
+package_update: true
+package_upgrade: true
+packages:
+  - wget
+  - ntpdate
+
+runcmd:
+  - echo "Hello World" > /home/iac/hello.txt
+  - chown iac:iac /home/iac/hello.txt
+  - chmod 644 /home/iac/hello.txt
+

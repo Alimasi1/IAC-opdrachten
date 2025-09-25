@@ -1,0 +1,27 @@
+---
+- name: Install and configure chrony on app servers
+  hosts: app
+  become: yes
+  tasks:
+    - name: Install chrony
+      ansible.builtin.package:
+        name: chrony
+        state: present
+      tags: chrony
+
+    - name: Ensure chrony is running and enabled
+      ansible.builtin.service:
+        name: chrony
+        state: started
+        enabled: yes
+      tags: chrony
+
+- name: Install curl on db servers
+  hosts: db
+  become: yes
+  tasks:
+    - name: Install curl
+      ansible.builtin.package:
+        name: curl
+        state: present
+      tags: curl

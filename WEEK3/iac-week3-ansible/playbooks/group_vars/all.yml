@@ -1,0 +1,7 @@
+users:
+  - name: devuser
+    shell: /bin/bash
+    state: present
+  - name: olduser
+    shell: /bin/bash
+    state: absent

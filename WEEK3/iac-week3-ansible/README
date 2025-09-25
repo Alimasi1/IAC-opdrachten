@@ -1,0 +1,1 @@
+Modules zijn idempotent (geven consistente resultaten bij meerdere runs) en geven meer gedetailleerde feedback dan ad-hoc commando's. Dit maakt ze betrouwbaarder en beter voor automatisering.

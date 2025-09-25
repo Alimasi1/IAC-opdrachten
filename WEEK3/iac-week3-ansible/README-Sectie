@@ -1,0 +1,1 @@
+Om dit playbook te draaien run je ansible-playbook playbooks/03_multi_group.yml
