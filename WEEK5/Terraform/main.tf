@@ -25,7 +25,7 @@ locals {
 
 # Eén nieuwe VM (veilig, unieke naam)
 resource "esxi_guest" "studentvm" {
-  guest_name = "student-vm-terraforms"
+  guest_name = "student-vm-terraform"
   disk_store = var.disk_store
   memsize    = var.memory_mb
   numvcpus   = var.num_cpus
