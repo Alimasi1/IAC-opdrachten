@@ -1,0 +1,34 @@
+- name: Install Apache zonder apt module + duidelijke changed/fail
+  hosts: web
+  become: true
+  vars:
+    apache_pkg: apache2
+
+  tasks:
+    - name: Check of apache2 al geïnstalleerd is
+      ansible.builtin.command: dpkg -s {{ apache_pkg }}
+      register: dpkg_status
+      changed_when: false
+      failed_when: false
+
+    - name: Installeer apache2 via apt-get (GEEN apt module)
+      ansible.builtin.command: >
+        bash -lc "DEBIAN_FRONTEND=noninteractive apt-get update -y &&
+                  apt-get install -y {{ apache_pkg }}"
+      register: install_out
+      when: dpkg_status.rc != 0     # alleen als het nog niet geïnstalleerd is
+      changed_when: install_out.rc == 0
+      # Als het al geïnstalleerd is, wordt deze task skipped -> geen changed.
+
+    - name: Start & enable apache2
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: true
+
+    # --- Bewuste fout om een nette failure te tonen ---
+    - name: Laat bewust falen (probeer onbestaand bestand te lezen)
+      ansible.builtin.command: cat /definitely/not/existing/file.txt
+      register: bad_cmd
+      failed_when: bad_cmd.rc != 0   # laat Ansible dit als FAILURE markeren
+      changed_when: false
