@@ -3,29 +3,34 @@ name: Terraform CI/CD
 on:
   push:
     paths:
-      - 'terraform/**'
-      - '.github/workflows/terraform-ci.yaml'
+      - 'WEEK5/Terraform/**'
+  workflow_dispatch:
 
 jobs:
   terraform:
     runs-on: self-hosted
+
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.10.3
+          terraform_version: 1.10.3   # versie die jij wilt gebruiken
 
-      - name: Terraform Init
-        run: terraform -chdir=terraform init
-
+      # Stap 1: Controleer of de code correct geformatteerd is
       - name: Terraform Format Check
-        run: terraform -chdir=terraform fmt -check
+        run: terraform -chdir=./WEEK5/Terraform fmt -check
 
+      # Stap 2: Init
+      - name: Terraform Init
+        run: terraform -chdir=./WEEK5/Terraform init
+
+      # Stap 3: Validate
       - name: Terraform Validate
-        run: terraform -chdir=terraform validate
+        run: terraform -chdir=./WEEK5/Terraform validate
 
+      # Stap 4: Plan
       - name: Terraform Plan
-        run: terraform -chdir=terraform plan
+        run: terraform -chdir=./WEEK5/Terraform plan
