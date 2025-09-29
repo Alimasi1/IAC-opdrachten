@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - name: ${ssh_username}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh-authorized-keys:
+      - ${public_key}
+
+packages:
+  - wget
+  - ntpdate
