@@ -1,0 +1,24 @@
+name: Ansible CI/CD pipline video
+
+on:
+  push:
+    paths:
+      - 'WEEK5/Playbook/**'
+      - '.github/workflows/ansible-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  ansible:
+    runs-on: self-hosted   # jouw lokale runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ansible sshpass
+
+      - name: Run Apache Playbook
+        run: |
+          ansible-playbook -i WEEK5/Playbook/inventory.ini WEEK5/Playbook/apache-run.yaml
