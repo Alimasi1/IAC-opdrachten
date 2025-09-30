@@ -15,5 +15,8 @@ jobs:
         with:
           terraform_version: 1.10.3
 
+      - name: Terraform Init
+        run: terraform -chdir=./WEEK5/Terraform init
+
       - name: Terraform Destroy
         run: terraform -chdir=./WEEK5/Terraform destroy -auto-approve
