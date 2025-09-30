@@ -5,7 +5,7 @@
     apache_pkg: apache2
 
   tasks:
-    - name: Check of apache2 al geïnstalleerd is
+    - name: Check of apache2 al geïnstalleerd iss
       ansible.builtin.command: dpkg -s {{ apache_pkg }}
       register: dpkg_status
       changed_when: false
