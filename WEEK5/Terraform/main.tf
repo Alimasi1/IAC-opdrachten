@@ -45,3 +45,5 @@ resource "esxi_guest" "studentvm" {
 output "studentvm_ip" {
   value = esxi_guest.studentvm.ip_address
 }
+
+# Test push trigger
