@@ -1,13 +1,13 @@
 name: Terraform Destroy
 
 on:
-  workflow_dispatch:   # handmatig starten
+  workflow_dispatch:
 
 jobs:
   destroy:
     runs-on: self-hosted
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Terraform
@@ -15,8 +15,5 @@ jobs:
         with:
           terraform_version: 1.10.3
 
-      - name: Terraform Init
-        run: terraform -chdir=terraform init
-
       - name: Terraform Destroy
-        run: terraform -chdir=terraform destroy -auto-approve
+        run: terraform -chdir=./WEEK5/Terraform destroy -auto-approve
