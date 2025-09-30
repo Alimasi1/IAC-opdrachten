@@ -9,7 +9,6 @@ on:
 jobs:
   terraform:
     runs-on: self-hosted
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,20 +16,20 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.10.3   # versie die jij wilt gebruiken
+          terraform_version: 1.10.3
 
-      # Stap 1: Controleer of de code correct geformatteerd is
       - name: Terraform Format Check
         run: terraform -chdir=./WEEK5/Terraform fmt -check
 
-      # Stap 2: Init
       - name: Terraform Init
         run: terraform -chdir=./WEEK5/Terraform init
 
-      # Stap 3: Validate
       - name: Terraform Validate
         run: terraform -chdir=./WEEK5/Terraform validate
 
-      # Stap 4: Plan
       - name: Terraform Plan
         run: terraform -chdir=./WEEK5/Terraform plan
+
+        
+      - name: Terraform Apply
+        run: terraform -chdir=./WEEK5/Terraform apply -auto-approve
