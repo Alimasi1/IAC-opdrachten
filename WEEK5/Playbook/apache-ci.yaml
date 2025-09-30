@@ -1,0 +1,26 @@
+- name: Install Apache zonder apt module (pipeline versie)
+  hosts: web
+  become: true
+  vars:
+    apache_pkg: apache2
+
+  tasks:
+    - name: Check of apache2 al geïnstalleerd is
+      ansible.builtin.command: dpkg -s {{ apache_pkg }}
+      register: dpkg_status
+      changed_when: false
+      failed_when: false
+
+    - name: Installeer apache2 via apt-get (GEEN apt module)
+      ansible.builtin.command: >
+        bash -lc "DEBIAN_FRONTEND=noninteractive apt-get update -y &&
+                  apt-get install -y {{ apache_pkg }}"
+      register: install_out
+      when: dpkg_status.rc != 0
+      changed_when: install_out.rc == 0
+
+    - name: Start & enable apache2
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: true
